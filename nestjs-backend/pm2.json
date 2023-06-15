@@ -1,0 +1,19 @@
+{
+    "apps": [
+        {
+            "name": "NestJS API",
+            "script": "dist/main.js",
+            "cwd": "nest-api",
+            "instances": "max",
+            "exec_mode": "cluster",
+            "watch": false,
+            "env": {
+                "POSTGRES_HOST": "postgres",
+                "POSTGRES_PORT": "5432",
+                "POSTGRES_USER": "your_postgres_user",
+                "POSTGRES_PASSWORD": "your_postgres_password",
+                "POSTGRES_DB": "your_postgres_database"
+            }
+        }
+    ]
+}

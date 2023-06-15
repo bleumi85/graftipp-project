@@ -1,0 +1,44 @@
+version: '3'
+services:
+  postgres-database:
+    container_name: postgres-database
+    image: postgres:15
+    env_file:
+      - ./.env
+    volumes:
+      - postgres-database:/var/lib/postgresql/data
+    ports:
+      - 5435:5432
+    networks:
+      - app-network
+    restart: unless-stopped
+  nestjs-backend:
+    container_name: nestjs-backend
+    build:
+      context: .\nestjs-backend
+      target: production
+    ports:
+      - 3001:3000
+    networks:
+      - app-network
+    depends_on:
+      - postgres-database
+    restart: unless-stopped
+  react-frontend:
+    container_name: react-frontend
+    build:
+      context: .\react-frontend
+    ports:
+      - 3000:80
+    networks:
+      - app-network
+    depends_on:
+      - nestjs-backend
+    restart: unless-stopped
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres-database:
